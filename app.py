@@ -4,8 +4,8 @@ from langchain.schema import SystemMessage, HumanMessage
 from dotenv import load_dotenv
 import os
 
-# .envファイルの読み込み
-load_dotenv()
+from dotenv import load_dotenv
+load_dotenv(".env")
 
 # OpenAI APIキーの取得
 openai_api_key = os.getenv("OPENAI_API_KEY")

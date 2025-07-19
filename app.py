@@ -1,11 +1,13 @@
-import streamlit as st
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import SystemMessage, HumanMessage
-from dotenv import load_dotenv
 import os
-
+import streamlit as st
 from dotenv import load_dotenv
-load_dotenv(".env")
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+
+# .envから環境変数を読み込む
+load_dotenv()
 
 # OpenAI APIキーの取得
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -14,7 +16,11 @@ if not openai_api_key:
     st.stop()
 
 # LLMモデルの初期化
-llm = ChatOpenAI(openai_api_key=openai_api_key, temperature=0.7, model="gpt-3.5-turbo")
+llm = ChatOpenAI(
+    api_key=openai_api_key,
+    model="gpt-3.5-turbo",
+    temperature=0.7,
+)
 
 # 専門家ごとのシステムメッセージを返す関数
 def get_system_message(expert_type: str) -> str:
@@ -38,7 +44,7 @@ def get_expert_advice(user_input: str, expert_type: str) -> str:
         SystemMessage(content=system_prompt),
         HumanMessage(content=user_input)
     ]
-    response = llm(messages)
+    response = llm.invoke(messages)
     return response.content
 
 # --- Streamlit UI 定義 ---

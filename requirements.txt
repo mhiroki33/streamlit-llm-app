@@ -1,5 +1,5 @@
-streamlit==1.40.1
-openai==1.23.6
-langchain==0.2.17
-langchain-community==0.2.4
-python-dotenv==1.0.1
+streamlit
+python-dotenv
+langchain
+langchain-openai
+openai>=1.14.3
